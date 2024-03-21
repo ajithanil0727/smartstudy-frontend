@@ -31,7 +31,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center h-[calc(100vh-100px)]">
         <div className="w-full max-w-md bg-gray-800 shadow-md rounded-md p-8">
           <h2 className="text-3xl font-bold mb-4 text-center text-white">
             LOGIN

@@ -22,7 +22,7 @@ export default function Header() {
   }, []);
   return (
     <>
-      <header className="bg-gray-800 text-white p-4">
+      <header className="bg-gray-800 text-white px-4 py-1">
         <div className="container mx-auto flex justify-between items-center">
           <img className="h-16" src={Logo} alt="logo" />
           <div className="flex items-center space-x-4">
