@@ -11,7 +11,7 @@ export default function ChatArea({ userId }) {
   useEffect(() => {
     if (!userData) return; 
 
-    const chatWs = new WebSocket(`ws://13.211.57.106/ws/chat/?token=${userData.access}&chat_with=${userId}`);
+    const chatWs = new WebSocket(`ws://oddityfinds.shop/ws/chat/?token=${userData.access}&chat_with=${userId}`);
     setWs(chatWs);
 
     chatWs.onopen = () => {
