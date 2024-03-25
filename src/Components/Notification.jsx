@@ -12,7 +12,7 @@ const NotificationComponent = () => {
 
   const deleteUnread = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/chat/deleteUnread/${userData.user.id}/`);
+      const response = await axios.get(`${BaseUrl}chat/deleteUnread/${userData.user.id}/`);
       console.log('Messages deleted successfully:', response.data);
     } catch (error) {
       console.error('Error deleting messages:', error.message);
@@ -22,7 +22,7 @@ const NotificationComponent = () => {
   useEffect(() => {
     if (userData && userData.access) {
       const client = new WebSocket(
-        `ws://localhost:8000/ws/notifications/?token=${userData.access}`
+        `ws://13.211.57.106/ws/notifications/?token=${userData.access}`
       );
       setWs(client);
 

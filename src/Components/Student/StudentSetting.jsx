@@ -1,34 +1,63 @@
-// import TutorPassEdit from "../Modals/TutorPassEdit";
+import EditPasswordModal from '../../Modals/EditPasswordModal';
 import { useState } from 'react';
 import { useUser } from '../../assets/Context'; 
 import EditModal from '../../Modals/EditModal';
 import { Link } from 'react-router-dom';
+import ChangeProfilePicModal from '../../Modals/ChangeProfilePicModal';
+import { BaseUrl } from '../../assets/Constants';
+import axios from "axios";
 export default function StudentSetting() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-//   const [popupIsOpen, setPopupIsOpen] = useState(false);
-const { userData } = useUser();
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const [profilePicIsOpen, setProfilePicIsOpen] = useState(false);
+  const { userData, setUserData } = useUser();
+  const fetchUserData = async () => {
+    try {
+        const response = await axios.post(`${BaseUrl}fetchuserdata/`, { refresh_token: userData?.refresh });
+        localStorage.removeItem('userdata');
+        localStorage.setItem("userdata", JSON.stringify(response.data))
+        setUserData(response.data);
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error;
+    }
+};
   const handleclick = () =>{
     setModalIsOpen(true)
   }
   const handlepass = () =>{
     setPopupIsOpen(true)
   }
+  const handlepic = () =>{
+    setProfilePicIsOpen(true)
+  }
   const handleClose = ()=>{
     setModalIsOpen(false)
   }
-//   const handlepassClose = ()=>{
-//     setPopupIsOpen(false)
-//   }
+  const handlepassClose = ()=>{
+    setPopupIsOpen(false)
+  }
+  const handlepicClose = ()=>{
+    setProfilePicIsOpen(false)
+  }
   return (
     <>
       <div className="h-full bg-gray-200 rounded-2xl flex justify-evenly items-center">
         <div className="h-5/6 bg-white w-1/3 rounded-2xl">
           <div className="flex justify-center h-1/2">
-            <img
-              src=""
-              alt="profile image"
-              className="w-full h-full object-contain"
-            />
+          {userData?.user.profile_picture === null ? (
+                <img
+                  src=""
+                  alt="profile image"
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <img
+                  src={`${BaseUrl}${userData?.user.profile_picture.slice(1)}`}
+                  alt="profile image"
+                  className="w-full h-full object-contain"
+                />
+              )}
           </div>
           <div className="h-56 flex flex-col justify-start items-center">
             <h1 className="text-yellow-600 capitalize ">
@@ -54,22 +83,17 @@ const { userData } = useUser();
                 </Link>
               </div>
               <div>
-                <button className="w-full h-10 bg-red-500 hover:bg-red-600 text-white rounded">
-                  AdminChat
+                <button className="w-full h-10 bg-red-500 hover:bg-red-600 text-white rounded" onClick={handlepic}>
+                  Change Profile pic
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div className="h-5/6 w-1/3 rounded-2xl flex flex-col justify-between">
-          
-          <div className="bg-white h-52 rounded-2xl overflow-y-auto p-4">
-            <h2 className="text-xl font-semibold mb-2">WishList</h2>
-          </div>
-        </div>
       </div>
       <EditModal visible={modalIsOpen} onClose={handleClose} user={userData}/>
-      {/* <TutorPassEdit visible={popupIsOpen} onClose={handlepassClose} user={userData}/> */}
+      <EditPasswordModal visible={popupIsOpen} onClose={handlepassClose} user={userData}/>
+      <ChangeProfilePicModal visible={profilePicIsOpen} onClose={handlepicClose} user={userData} newdata={fetchUserData} />
     </>
   );
 }

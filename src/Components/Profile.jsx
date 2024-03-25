@@ -9,15 +9,15 @@ export default function () {
               to=""
               className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"
             >
-              Dashboard
-            </NavLink>
-            <NavLink
-              to="/tutorprofile/courses"
-              className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"
-            >
               Courses
             </NavLink>
-
+            <NavLink
+            to="/tutorprofile/entrolledusers"
+            className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"
+            
+          >
+            Entrollment
+          </NavLink>
             <NavLink
               to="/tutorprofile/setting"
               className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"

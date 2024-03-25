@@ -20,6 +20,8 @@ import HomeCourseDetails from "./Home/HomeCourseDetails";
 import Cart from "./Student/Cart";
 import PaymentStatus from "./Student/PaymentStatus";
 import StudentCourseList from "./Student/StudentCourseList";
+import CategoryCourse from "./CategoryCourse";
+import EntrolledList from "./EntrolledList";
 
 
 
@@ -36,6 +38,7 @@ export default function Navigation() {
           <Route path="/signup" element={<RegisterForm />} />
           <Route path="/tutorregister" element={<RegisterForm />} />
           <Route path="/coursedetails/:courseId" element={<HomeCourseDetails />} />
+          <Route path="/categorycourse/:categoryId" element={<CategoryCourse />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/paymentstatus" element={<PaymentStatus />} />
           <Route path="/admin" element={<AdminProfile />}>
@@ -48,15 +51,14 @@ export default function Navigation() {
             <Route path="setting/chat" element={<ChatRoom />} />
           </Route>
           <Route path="/tutorprofile" element={<ProfilePage />}>
-            <Route index element={<p>Dashboard</p>} />
-            <Route path="courses" element={<CourseTab />} />
+            <Route index element={<CourseTab />} />
             <Route path="courses/coursedetail/:courseId" element={<CourseDetail />} />
+            <Route path="entrolledusers" element={<EntrolledList />} />
             <Route path="setting" element={<Setting />} />
             <Route path="setting/chat" element={<ChatRoom />} />
           </Route>
           <Route path="/student" element={<StudentProfile />}>
-            <Route index element={<p>Dashboard</p>} />
-            <Route path="courses" element={<StudentCourseList />} />
+            <Route index element={<StudentCourseList />} />
             <Route path="setting" element={<StudentSetting />} />
             <Route path="setting/chat" element={<ChatRoom />} />
           </Route>

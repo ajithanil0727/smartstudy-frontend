@@ -11,13 +11,6 @@ export default function StudentProfile() {
             className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"
             
           >
-            Dashboard
-          </NavLink>
-          <NavLink
-            to="/student/courses"
-            className="px-4 py-2 text-lg border-b border-gray-700 hover:bg-gray-700 hover:text-white text-center"
-            
-          >
             Courses
           </NavLink>
           <NavLink
