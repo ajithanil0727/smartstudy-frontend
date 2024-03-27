@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BaseUrl } from "../../assets/Constants";
 import CoursesList from "../CoursesList";
 
+
 export default function AdminCourseList() {
   const [courses, setCourses] = useState([]);
   const fetchCourses = async () => {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { BaseUrl } from "../assets/Constants";
+import { toast } from "react-toastify";
 
 export default function AddVideoModal({ visible, onClose, id }) {
   const [formData, setFormData] = useState({
@@ -41,9 +42,11 @@ export default function AddVideoModal({ visible, onClose, id }) {
         },
       });
       console.log("Video added successfully:", response.data);
+      toast.success("Video added successfully")
       onClose();
     } catch (error) {
       console.error("Error adding video:", error);
+      toast.success("Error adding video")
     }
   };
 
@@ -89,6 +92,8 @@ export default function AddVideoModal({ visible, onClose, id }) {
                   <input
                     type="text"
                     name="title"
+                    pattern="^[^\s][\w\s-]*$"
+                    title="The title should start with a character or special character"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Video Title"
                     onChange={handleChange}
@@ -105,6 +110,8 @@ export default function AddVideoModal({ visible, onClose, id }) {
                   <input
                     type="text"
                     name="description"
+                    pattern="^[^\s][\w\s-]*$"
+                    title="The title should start with a character or special character"
                     placeholder="Description"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     onChange={handleChange}

@@ -5,6 +5,8 @@ import { BaseUrl } from "../assets/Constants";
 import AddVideoModal from "../Modals/AddVideoModal";
 import VideoPlayer from "./VideoPlayer";
 import { useUser } from "../assets/Context"; 
+import { toast } from 'react-toastify';
+
 export default function CourseDetail() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);

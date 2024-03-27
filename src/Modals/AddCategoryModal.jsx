@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { BaseUrl } from "../assets/Constants";
+import { toast } from "react-toastify";
 
 export default function AddCategoryModal({ visible, onClose }){
     const [newCategory, setNewCategory] = useState('');
@@ -8,10 +9,11 @@ export default function AddCategoryModal({ visible, onClose }){
       try {
         const response = await axios.post(`${BaseUrl}createcategory/`, {name:newCategory});
         console.log('New category added:', response.data);
+        toast.success("New category added")
         onClose();
       } catch (error) {
         console.error('Error adding new category:', error);
-        alert(error.response.data.detail)
+        toast.error(error.response.data.detail)
       }
     };
     

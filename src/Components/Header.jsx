@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { BaseUrl, Logo } from "../assets/Constants";
 import { useUser } from "../assets/Context";
+import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
+import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
 import { Link, useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import axios from "axios";
@@ -74,24 +76,29 @@ export default function Header() {
               <div className="flex items-center space-x-4">
                 <p className="mr-3">
                   {userData.message === "admin"
-                    ? "admin"
-                    : userData.user.first_name}
+                    ? "Admin"
+                    : userData.user.first_name.toUpperCase()}
                 </p>
                 {userData.message === "tutor" && (
-                  <Link to={"/tutorprofile"}>Profile</Link>
+                  <><div>
+                  <Link to={"/tutorprofile"}><FaUserCircle /></Link>
+                  </div>
+                  <Notification />
+                  </>
                 )}
 
-                {userData.message === "admin" && (
-                  <Link to={"/admin"}>Profile</Link>
+                {userData.message === "admin" && (      
+                  <Link to={"/admin"}><FaUserCircle /></Link>
+                  
                 )}
 
                 {userData.message === "student" && (
                   <>
                     <div>
-                      <Link to={"/student"}>Profile</Link>
+                      <Link to={"/student"}><FaUserCircle /></Link>
                     </div>
                     <div>
-                      <Link to={"/cart"}>cart</Link>
+                      <Link to={"/cart"}><FaShoppingCart /></Link>
                     </div>
                     <Notification />
                   </>

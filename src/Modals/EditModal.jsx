@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { BaseUrl } from '../assets/Constants';
-export default function EditModal({ visible, onClose, user}) {
+import { toast } from 'react-toastify';
+
+export default function EditModal({ visible, onClose, user, newdata}) {
   const [formData, setFormData] = useState({
     first_name: user.user.first_name,
     last_name: user.user.last_name,
@@ -22,9 +24,12 @@ export default function EditModal({ visible, onClose, user}) {
     try {
       const response = await axios.put(`${BaseUrl}edituser/${user.user.id}/`, formData);
       console.log(response.data)
+      newdata()
+      toast.success("Details Updated")
       onClose();
     } catch (error) {
       console.error('Error updating user:', error);
+      toast.error("Error Updating Details")
     }
   };
 
@@ -71,6 +76,8 @@ export default function EditModal({ visible, onClose, user}) {
                   <input
                     type="text"
                     name="first_name"
+                    pattern="[a-zA-Z]+"
+                    title="Only alphabetic characters allowed"
                     value={formData.first_name}
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -87,6 +94,8 @@ export default function EditModal({ visible, onClose, user}) {
                   <input
                     type="text"
                     name="last_name"
+                    pattern="[a-zA-Z]+"
+                    title="Only alphabetic characters allowed"
                     value={formData.last_name}
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"

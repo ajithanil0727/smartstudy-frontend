@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { BaseUrl } from "../assets/Constants";
+import { toast } from "react-toastify";
 
 export default function AddSubCategoryModal({ visible, onClose, curcat }) {
   const [newSubCategory, setNewSubCategory] = useState('');
@@ -10,10 +11,11 @@ export default function AddSubCategoryModal({ visible, onClose, curcat }) {
       console.log(newSubCategory, curcat)
       const response = await axios.post(`${BaseUrl}createsubcategory/`, {name: newSubCategory, category: curcat});
       console.log('New subcategory added:', response.data);
+      toast.success("New subcategory added")
       onClose();
     } catch (error) {
       console.error('Error adding new subcategory:', error);
-      alert(error.response.data.detail)
+      toast.error(error.response.data.detail)
     }
   };
   
@@ -32,6 +34,7 @@ export default function AddSubCategoryModal({ visible, onClose, curcat }) {
           <input
             type="text"
             pattern="[a-zA-Z]+"
+            title="Only alphabetic characters allowed"
             id="newSubCategory"
             value={newSubCategory}
             onChange={(e) => setNewSubCategory(e.target.value)}

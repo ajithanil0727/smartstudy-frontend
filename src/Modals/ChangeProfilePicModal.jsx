@@ -1,28 +1,40 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { BaseUrl } from '../assets/Constants';
-import { useUser } from '../assets/Context';
+import { useState } from "react";
+import axios from "axios";
+import { BaseUrl } from "../assets/Constants";
+import { useUser } from "../assets/Context";
+import { toast } from "react-toastify";
 
-export default function ChangeProfilePicModal({ visible, onClose, user, newdata}) {
+export default function ChangeProfilePicModal({
+  visible,
+  onClose,
+  user,
+  newdata,
+}) {
   const [profilePicture, setProfilePicture] = useState(null);
-  const { userData } = useUser()
+  const { userData } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('profile_picture', profilePicture);
-      
-      const response = await axios.put(`${BaseUrl}changeuserprofilepic/${userData?.user.id}/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      formData.append("profile_picture", profilePicture);
+
+      const response = await axios.put(
+        `${BaseUrl}changeuserprofilepic/${userData?.user.id}/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
       console.log(response.data);
       newdata();
+      toast.success("Profile Pic Changed");
       onClose();
     } catch (error) {
-      console.error('Error updating profile picture:', error);
+      console.error("Error updating profile picture:", error);
+      toast.error("Error Updating ProfilePic");
     }
   };
 
@@ -34,7 +46,9 @@ export default function ChangeProfilePicModal({ visible, onClose, user, newdata}
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-slate-800 rounded-lg shadow">
             <div className="flex items-center justify-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-xl font-semibold text-black">Change Profile Picture</h3>
+              <h3 className="text-xl font-semibold text-black">
+                Change Profile Picture
+              </h3>
               <button
                 className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={onClose}
@@ -69,9 +83,18 @@ export default function ChangeProfilePicModal({ visible, onClose, user, newdata}
                   <input
                     type="file"
                     name="profile_picture"
-                    onChange={(e) => setProfilePicture(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      const allowedTypes = ["image/jpeg", "image/jpg"];
+                      if (allowedTypes.includes(file.type)) {
+                        setProfilePicture(file);
+                      } else {
+                        toast.error("Only JPG files are allowed.");
+                      }
+                    }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
+                    accept=".jpg, .jpeg"
                   />
                 </div>
                 <button

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { BaseUrl } from "../../assets/Constants";
+import { toast } from 'react-toastify';
+
 export default function AdminTutorList(){
     const [tutors, setTutors] = useState([]);
 
@@ -12,6 +14,11 @@ export default function AdminTutorList(){
             tutor.id === tutorId ? { ...tutor, is_approved: !tutor.is_approved } : tutor
           )
         );
+        if (response.data.is_approved) {
+          toast.info("Tutor approved");
+        } else {
+          toast.info("Tutor approval revoked");
+        }
         console.log(`Tutor with ID ${tutorId} approval status toggled.`, response.data);
       } catch (error) {
         console.error("Error updating field", error);
@@ -25,6 +32,11 @@ export default function AdminTutorList(){
             tutor.id === tutorId ? { ...tutor, is_active: !tutor.is_active } : tutor
           )
         );
+        if (response.data.is_active) {
+          toast.info("Tutor unblocked");
+        } else {
+          toast.info("Tutor blocked");
+        }
         console.log(`Tutor with ID ${tutorId} status toggled.`, response.data);
       } catch (error) {
         console.error("Error updating field", error);

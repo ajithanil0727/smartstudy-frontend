@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { BaseUrl } from "../../assets/Constants";
+import { toast } from 'react-toastify';
 
 export default function AdminStudentList(){
     const [students, setStudents] = useState([]);
@@ -12,6 +13,11 @@ export default function AdminStudentList(){
               student.id === studentId ? { ...student, is_active: !student.is_active } : student
             )
           );
+          if (response.data.is_active) {
+            toast.info("Student unblocked");
+          } else {
+            toast.info("Student blocked");
+          }
           console.log(`Tutor with ID ${studentId} approval status toggled.`, response.data);
         } catch (error) {
           console.error("Error updating field", error);

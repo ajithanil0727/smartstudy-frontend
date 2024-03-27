@@ -4,6 +4,7 @@ import AddCategoryModal from "./AddCategoryModal";
 import { BaseUrl } from "../assets/Constants";
 import AddSubCategoryModal from "./AddSubCategoryModal";
 import { useUser } from "../assets/Context";
+import { toast } from "react-toastify";
 
 export default function AddCourseModal({ visible, onClose }) {
   const [categories, setCategories] = useState([]);
@@ -99,9 +100,11 @@ export default function AddCourseModal({ visible, onClose }) {
         }
       );
       console.log("Course created successfully:", response.data);
+      toast.success("Course created successfully")
       onClose();
     } catch (error) {
       console.error("Error creating course:", error);
+      toast.error("Error creating course")
     }
   };
 
@@ -148,6 +151,7 @@ export default function AddCourseModal({ visible, onClose }) {
                     type="text"
                     name="title"
                     pattern="[A-Za-z][A-Za-z\s]*"
+                    title="The text should start with a letter and may contain letters and spaces."
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Course Title"
                     onChange={handleChange}
@@ -165,6 +169,7 @@ export default function AddCourseModal({ visible, onClose }) {
                     type="text"
                     name="description"
                     pattern="[A-Za-z][A-Za-z\s]*"
+                    title="The text should start with a letter and may contain letters and spaces."
                     placeholder="Description"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     onChange={handleChange}
@@ -226,6 +231,7 @@ export default function AddCourseModal({ visible, onClose }) {
                       ))}
                     </select>
                     <button
+                      type="button"
                       onClick={handleAddCategory}
                       className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -254,6 +260,7 @@ export default function AddCourseModal({ visible, onClose }) {
                       ))}
                     </select>
                     <button
+                      type="button"
                       onClick={handleAddSubCategory}
                       className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >

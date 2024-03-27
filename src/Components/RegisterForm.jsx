@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BaseUrl } from "../assets/Constants";
+import { toast } from 'react-toastify';
+
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -22,25 +24,33 @@ export default function RegisterForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.password !== formData.password_confirmation) {
+      toast.error("Passwords are not matching");
+      return;
+    }
     if (location.pathname === "/tutorregister") {
       axios
         .post(`${BaseUrl}createtutor/`, formData)
         .then((response) => {
           console.log("success:", response.data);
+          toast.success("Registration sucessfull")
           navigate("/login");
         })
         .catch((error) => {
           console.error("error:", error);
+          toast.error("Registration Unsucessfull")
         });
     } else {
       axios
         .post(`${BaseUrl}createuser/`, formData)
         .then((response) => {
           console.log("success:", response.data);
+          toast.success("Registration sucessfull")
           navigate("/login");
         })
         .catch((error) => {
           console.error("error:", error);
+          toast.error("Registration Unsucessfull")
         });
     }
   };
@@ -58,6 +68,7 @@ export default function RegisterForm() {
               <input
                 type="text"
                 pattern="[a-zA-Z]+"
+                title="Only alphabetic characters allowed"
                 name="first_name"
                 placeholder="first name"
                 onChange={handleChange}
@@ -68,6 +79,7 @@ export default function RegisterForm() {
               <input
                 type="text"
                 pattern="[a-zA-Z]+"
+                title="Only alphabetic characters allowed"
                 name="last_name"
                 placeholder="last name"
                 onChange={handleChange}
@@ -87,6 +99,7 @@ export default function RegisterForm() {
               <input
                 type="password"
                 pattern="^\S{4,}$"
+                title="Please enter at least 4 non-space characters"
                 name="password"
                 placeholder="password"
                 onChange={handleChange}
@@ -97,6 +110,7 @@ export default function RegisterForm() {
               <input
                 type="password"
                 pattern="^\S{4,}$"
+                title="Please enter at least 4 non-space characters"
                 placeholder="confirm password"
                 name="password_confirmation"
                 onChange={handleChange}

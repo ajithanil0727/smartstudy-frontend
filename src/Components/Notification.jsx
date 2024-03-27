@@ -22,7 +22,7 @@ const NotificationComponent = () => {
   useEffect(() => {
     if (userData && userData.access) {
       const client = new WebSocket(
-        `wss://oddityfinds.shop/ws/notifications/?token=${userData.access}`
+        `ws://127.0.0.1:8000/ws/notifications/?token=${userData.access}`
       );
       setWs(client);
 
@@ -54,11 +54,11 @@ const NotificationComponent = () => {
 
   return (
     <div className="notification-dropdown relative">
-      <button className="notification-icon" onClick={toggleDropdown}>
+      <button className="notification-icon relative" onClick={toggleDropdown}>
         <span className="bell-icon" role="img" aria-label="Bell">
           🔔
         </span>
-        {unreadCount > 0 && <span className="unread-count">{unreadCount}</span>}
+        {unreadCount > 0 && <span className="unread-count absolute right-0 top-[-5px] text-xs bg-red-700 px-1 rounded-full">{unreadCount}</span>}
       </button>
       {isOpen && (
         <div className="absolute right-0 top-[70px] shadow-lg bg-white py-2 z-[1000] min-w-full rounded-lg w-[410px] max-h-[500px] overflow-auto">

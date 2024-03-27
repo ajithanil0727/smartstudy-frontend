@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { BaseUrl } from '../assets/Constants';
 import { useUser } from '../assets/Context';
+import { toast } from 'react-toastify';
 
 export default function EditPasswordModal({ visible, onClose, user }) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -20,15 +21,17 @@ export default function EditPasswordModal({ visible, onClose, user }) {
           confirm_password: newPassword1
         });
         console.log(response.data);
+        toast.success("Password Changed Sucessfully")
         onClose();
       } else {
         console.log("New passwords do not match");
-      }
+        toast.error("New password and confirm password does not match")
+      } 
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const responseData = error.response.data;
         if (responseData.error) {
-          alert(responseData.error);
+          toast.error(responseData.error);
         } else {
           console.log("An error occurred:", responseData);
         }
@@ -81,6 +84,8 @@ export default function EditPasswordModal({ visible, onClose, user }) {
                   <input
                     type="password"
                     name="current_password"
+                    pattern="^\S{4,}$"
+                    title="Please enter at least 4 non-space characters"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     className={`bg-gray-50 border ${passwordError ? 'border-red-500' : 'border-gray-300'} text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white`}
@@ -98,6 +103,8 @@ export default function EditPasswordModal({ visible, onClose, user }) {
                   <input
                     type="password"
                     name="new_password"
+                    pattern="^\S{4,}$"
+                    title="Please enter at least 4 non-space characters"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -114,6 +121,8 @@ export default function EditPasswordModal({ visible, onClose, user }) {
                   <input
                     type="password"
                     name="confirm_password"
+                    pattern="^\S{4,}$"
+                    title="Please enter at least 4 non-space characters"
                     value={newPassword1}
                     onChange={(e) => setNewPassword1(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"

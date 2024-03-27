@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BaseUrl } from "../assets/Constants";
 import { useUser } from "../assets/Context";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 
 export default function LoginForm() {
@@ -20,10 +22,11 @@ export default function LoginForm() {
       const response = await axios.post(`${BaseUrl}userlogin/`, data);
       localStorage.setItem("userdata", JSON.stringify(response.data))
       setUserData(response.data);
+      toast.success("Login sucess",{autoClose : 2000})
       navigate('/')
 
     } catch (error) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
       console.log(error)
     
     }
