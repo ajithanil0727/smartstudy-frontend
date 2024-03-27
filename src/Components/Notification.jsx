@@ -22,7 +22,7 @@ const NotificationComponent = () => {
   useEffect(() => {
     if (userData && userData.access) {
       const client = new WebSocket(
-        `ws://127.0.0.1:8000/ws/notifications/?token=${userData.access}`
+        `wss://oddityfinds.shop/ws/notifications/?token=${userData.access}`
       );
       setWs(client);
 
