@@ -83,15 +83,7 @@ export default function ChangeProfilePicModal({
                   <input
                     type="file"
                     name="profile_picture"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      const allowedTypes = ["image/jpeg", "image/jpg"];
-                      if (allowedTypes.includes(file.type)) {
-                        setProfilePicture(file);
-                      } else {
-                        toast.error("Only JPG files are allowed.");
-                      }
-                    }}
+                    onChange={(e) => {setProfilePicture(e.target.files[0])}}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                     accept=".jpg, .jpeg"
