@@ -26,5 +26,5 @@ export default function ProtectedRoutes() {
     }
   }, []);
 
-  return <>{userData ? <Outlet /> : <Navigate to="/" />}</>;
+  return <>{userData ? <Outlet /> : <Navigate to="https://smartstudy-frontend.vercel.app" />}</>;
 }
