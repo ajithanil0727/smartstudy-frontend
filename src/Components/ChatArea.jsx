@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../assets/Context";
+import { BaseUrl } from "../assets/Constants";
 
 export default function ChatArea({ userId }) {
   const [ws, setWs] = useState(null);
@@ -59,7 +60,7 @@ export default function ChatArea({ userId }) {
   const fetchOldMessages = () => {
     if (!userData) return;
     const token = userData.access;
-    axios.get(`http://127.0.0.1:8000/chat/chathistory/${userId}/?token=${token}`)
+    axios.get(`${BaseUrl}chat/chathistory/${userId}/?token=${token}`)
       .then(response => {
         setMessages(response.data);
       })
