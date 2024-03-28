@@ -3,7 +3,7 @@ import { BaseUrl, Logo } from "../assets/Constants";
 import { useUser } from "../assets/Context";
 import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
 import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import axios from "axios";
 export default function Header() {
@@ -11,6 +11,12 @@ export default function Header() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const { userData, setUserData } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const message = queryParams.get("message");
+  if (message){
+    navigate(`/paymentstatus?message=${message}`)
+  }
   const handleLogout = () => {
     setUserData(null);
     localStorage.removeItem("userdata");
